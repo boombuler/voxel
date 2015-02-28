@@ -173,7 +173,7 @@ func perfomMeshing(sides map[mgl.Vec3I]Voxel, dir faceDirection) (result []Verte
 		for {
 			cpn := startPos.Add(d1s)
 			v, ok := sides[cpn]
-			if ok && v.Equals(checkVal) {
+			if ok && v == checkVal {
 				startPos = cpn
 			} else {
 				break
@@ -182,7 +182,7 @@ func perfomMeshing(sides map[mgl.Vec3I]Voxel, dir faceDirection) (result []Verte
 		for {
 			cpn := startPos.Add(d2s)
 			v, ok := sides[cpn]
-			if ok && v.Equals(checkVal) {
+			if ok && v == checkVal {
 				startPos = cpn
 			} else {
 				break
@@ -194,7 +194,7 @@ func perfomMeshing(sides map[mgl.Vec3I]Voxel, dir faceDirection) (result []Verte
 		for {
 			t := startPos.Add(d1.Mul(width))
 			v, ok := sides[t]
-			if ok && v.Equals(checkVal) {
+			if ok && v == checkVal {
 				delete(sides, t)
 				width++
 			} else {
@@ -209,7 +209,7 @@ func perfomMeshing(sides map[mgl.Vec3I]Voxel, dir faceDirection) (result []Verte
 			for i := 0; i < width; i++ {
 				t := startRow.Add(d1.Mul(i))
 				v, ok := sides[t]
-				if !ok || !v.Equals(checkVal) {
+				if !ok || v != checkVal {
 					allOk = false
 					break
 				}

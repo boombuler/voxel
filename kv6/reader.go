@@ -9,21 +9,17 @@ import (
 	"io"
 )
 
-type kv6Block struct {
+type kv6Vox struct {
 	R, G, B byte
-	ZPos    int
 }
 
-func (b kv6Block) Color() color.Color {
+type kv6Block struct {
+	kv6Vox
+	ZPos int
+}
+
+func (b kv6Vox) Color() color.Color {
 	return color.RGBA{b.R, b.G, b.B, 255}
-}
-
-func (b kv6Block) Equals(v r.Voxel) bool {
-	cvo, ok := v.(*kv6Block)
-	if ok {
-		return b.R == cvo.R && b.G == cvo.G && b.B == cvo.B
-	}
-	return false
 }
 
 type KV6File struct {
@@ -56,7 +52,7 @@ func (f *KV6File) ForeachVoxel(fn func(pos mgl.Vec3I, vox r.Voxel)) {
 
 	xMax := f.xpos[x]
 	yMax := f.xypos[(x*f.size.Y())+y]
-	for _, vox := range f.content {
+	for _, block := range f.content {
 		for xMax == 0 {
 			x++
 			if x >= f.size.X() {
@@ -75,7 +71,7 @@ func (f *KV6File) ForeachVoxel(fn func(pos mgl.Vec3I, vox r.Voxel)) {
 			yMax = f.xypos[(x*f.size.Y())+y]
 		}
 
-		fn(f.rotateCoords(mgl.Vec3I{x, y, vox.ZPos}), vox)
+		fn(f.rotateCoords(mgl.Vec3I{x, y, block.ZPos}), block.kv6Vox)
 		yMax--
 
 		xMax--
@@ -102,11 +98,11 @@ func (f *KV6File) At(pos mgl.Vec3I) r.Voxel {
 	cnt := f.xypos[(pos.X()*f.size.Y())+pos.Y()]
 
 	for i := 0; i < cnt; i++ {
-		v := f.content[idx+i]
-		if v.ZPos == pos.Z() {
-			return v
+		blk := f.content[idx+i]
+		if blk.ZPos == pos.Z() {
+			return blk.kv6Vox
 		}
-		if v.ZPos > pos.Z() {
+		if blk.ZPos > pos.Z() {
 			return nil
 		}
 	}

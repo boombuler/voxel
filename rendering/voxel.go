@@ -7,7 +7,6 @@ import (
 
 type Voxel interface {
 	Color() color.Color
-	Equals(v Voxel) bool
 }
 
 type Chunk interface {

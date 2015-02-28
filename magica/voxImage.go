@@ -16,14 +16,6 @@ func (cv colorVoxel) Color() color.Color {
 	return color.RGBA(cv)
 }
 
-func (cv colorVoxel) Equals(v rendering.Voxel) bool {
-	cvo, ok := v.(colorVoxel)
-	if ok {
-		return cv.R == cvo.R && cv.G == cvo.G && cv.B == cvo.B && cv.A == cvo.A
-	}
-	return false
-}
-
 type VoxFileModel struct {
 	palette []colorVoxel
 	size    mgl.Vec3I
