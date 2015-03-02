@@ -1,9 +1,28 @@
 package rle
 
 import (
+	"bytes"
 	"github.com/boombuler/voxel/mgl"
 	"testing"
 )
+
+func Test_CodeInt(t *testing.T) {
+	tests := []struct {
+		n uint
+		r []byte
+	}{
+		{0, []byte{0x00}},
+		{1, []byte{0x01}},
+		{128, []byte{0x80, 0x01}},
+		{256, []byte{0x80, 0x02}},
+	}
+	for _, tst := range tests {
+		res := codeInt(tst.n)
+		if bytes.Compare(res, tst.r) != 0 {
+			t.Errorf("Failed to code int %v\nGot: %v\nExpected:%v", tst.n, res, tst.r)
+		}
+	}
+}
 
 func Test_IntToVec_VecToInt(t *testing.T) {
 	idx_Exp := 0

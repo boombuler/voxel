@@ -21,30 +21,27 @@ func idxToVec(i int) mgl.Vec3I {
 }
 
 func codeInt(cnt uint) []byte {
-	if cnt == 0 {
-		return []byte{0}
-	}
 	b := make([]byte, 0)
-	for cnt > 0 {
-		v := byte(cnt & 0x7F)
+	for cnt >= 0x80 {
+		b = append(b, byte((cnt&0x7F)|0x80))
 		cnt >>= 7
-		if cnt > 0 {
-			v = v | 0x80
-		}
-
-		b = append(b, v)
 	}
+	b = append(b, byte(cnt&0x7F))
 	return b
 }
 
 func decodeInt(data []byte) (uint, int) {
 	res := uint(0)
+	shift := uint(0)
+
 	for i := 0; i < len(data); i++ {
 		b := data[i]
-		res = res | (uint(b&0x7F) << uint(7*i))
+
+		res = res | (uint(b&0x7F) << shift)
 		if b&0x80 != 0x80 {
 			return res, i + 1
 		}
+		shift += 7
 	}
 	return res, len(data)
 }
