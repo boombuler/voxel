@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/boombuler/voxel/rendering"
-	"github.com/go-gl/gl"
-	glfw "github.com/go-gl/glfw3"
 	"runtime"
+
+	"github.com/boombuler/voxel/rendering"
+	"github.com/go-gl-legacy/gl"
+	"github.com/go-gl/glfw/v3.0/glfw"
 )
 
 type Options struct {

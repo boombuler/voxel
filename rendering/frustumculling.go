@@ -2,7 +2,7 @@ package rendering
 
 import (
 	"github.com/boombuler/voxel/mgl"
-	"github.com/go-gl/gl"
+	"github.com/go-gl-legacy/gl"
 )
 
 type plane struct {
