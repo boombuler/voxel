@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/boombuler/voxel/mgl"
-	"github.com/go-gl/gl"
-	glfw "github.com/go-gl/glfw3"
-	"github.com/go-gl/glu"
 	"math"
+
+	"github.com/boombuler/voxel/mgl"
+	"github.com/go-gl-legacy/gl"
+	"github.com/go-gl-legacy/glu"
+	"github.com/go-gl/glfw/v3.0/glfw"
 )
 
 type camera struct {

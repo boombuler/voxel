@@ -1,6 +1,6 @@
 package rendering
 
-import "github.com/go-gl/gl"
+import "github.com/go-gl-legacy/gl"
 
 type CubeMesh struct {
 	buf    gl.Buffer
